@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,7 +14,6 @@ func TestGenerateRandomElements(t *testing.T) {
 		if v <= 0 {
 			assert.Equal(t, []int{}, res)
 		} else {
-			fmt.Printf("Expected: %d Actual: %d len of slice\n", v, len(res)) // Выводим ожидаемое значение для проверки в консоли (необязательно)
 			assert.Len(t, res, v)
 		}
 	}
@@ -32,26 +30,24 @@ func TestMaximum(t *testing.T) {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{500, 7000, 1555500, 1212121, 32, 158},
 	}
+
+	expectedData := []int{10, 55, 1, 1555500}
+	j := 0
 	for i := 0; i < len(data); i++ {
 		m := maximum(data[i])
 		if len(data[i]) == 0 {
-			fmt.Printf("Expected: 0 Actual: %d\n", m) // Выводим ожидаемое значение для проверки в консоли (необязательно)
 			assert.Equal(t, 0, m)
 		}
 		if len(data[i]) == 1 {
-			fmt.Printf("Expected: %d Actual: %d\n", data[i][0], m) // Выводим ожидаемое значение для проверки в консоли (необязательно)
 			assert.Equal(t, data[i][0], m)
 		}
 		if len(data[i]) > 1 {
-			max := data[i][0]
-			for j := 0; j < len(data[i]); j++ {
-				if data[i][j] > max {
-					max = data[i][j]
-
-				}
+			for j < len(expectedData) {
+				assert.Equal(t, expectedData[j], m)
+				j++
+				break
 			}
-			fmt.Printf("Expected: %d Actual: %d\n", max, m) // Выводим ожидаемое значение для проверки в консоли (необязательно)
-			assert.Equal(t, max, m)
+
 		}
 	}
 }

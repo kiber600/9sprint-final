@@ -50,20 +50,25 @@ func maximum(data []int) int {
 func maxChunks(data []int) int {
 	// ваш код здесь
 	var wg sync.WaitGroup
+	if len(data) == 0 {
+		return 0
+	}
+	if len(data) == 1 {
+		return data[0]
+	}
 	result := make([]int, CHUNKS)
 	for i := 0; i < CHUNKS; i++ {
 
-		sliceStart := i * SIZE / CHUNKS
-		sliceEnd := sliceStart + SIZE/CHUNKS
+		sliceStart := i * len(data) / CHUNKS
+		sliceEnd := sliceStart + len(data)/CHUNKS
 		if i == CHUNKS-1 {
-			sliceEnd = SIZE
+			sliceEnd = len(data)
 		}
 		sliceOfData := data[sliceStart:sliceEnd]
 		wg.Add(1)
 		go func(idx int, dataCh []int) {
 			defer wg.Done()
-			max := maximum(dataCh)
-			result[idx] = max
+			result[idx] = maximum(dataCh)
 
 		}(i, sliceOfData)
 
